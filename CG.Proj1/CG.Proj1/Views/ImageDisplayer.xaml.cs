@@ -12,17 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using CG.Proj1.ViewModels;
 
-namespace CG.Proj1
+namespace CG.Proj1.Views
 {
-    public partial class MainWindow : Window
+    /// <summary>
+    /// Interaction logic for ImageDisplayer.xaml
+    /// </summary>
+    public partial class ImageDisplayer : UserControl
     {
-        private MainWindowViewModel ViewModel => (MainWindowViewModel) this.DataContext;
-        public MainWindow()
+        public ImageDisplayer()
         {
             InitializeComponent();
-            this.DataContext = new MainWindowViewModel();
         }
     }
 }

@@ -4,16 +4,43 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CG.Proj1"
+        xmlns:views="clr-namespace:CG.Proj1.Views"
         mc:Ignorable="d"
-        Title="Project 1" Height="450" Width="800">
+        Title="Project 1" Height="450" Width="800"
+        Background="LightSteelBlue">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5*"></ColumnDefinition>
+            <ColumnDefinition Width="5"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
         </Grid.RowDefinitions>
+        <GroupBox Grid.Column="0" Grid.RowSpan="2">
+            <views:ImageDisplayer DataContext="{Binding ImgDisplayer}"/></GroupBox>
+       <StackPanel Grid.Row="0" Grid.Column="2">
+            <GroupBox Padding="3" Header="Functions">
+                <StackPanel Margin="3">
+                    <Button Content="Inversion" Command="{Binding ImgDisplayer.InverseCommand}" IsEnabled="{Binding ImgDisplayer.InverseCommand.CanExecute}"/>
+                    <Button Content="Brightness+" Command="{Binding ImgDisplayer.BrightnessPlusCommand}" IsEnabled="{Binding ImgDisplayer.BrightnessPlusCommand.CanExecute}"/>
+                    <Button Content="Brightness-" Command="{Binding ImgDisplayer.BrightnessMinusCommand}" IsEnabled="{Binding ImgDisplayer.BrightnessMinusCommand.CanExecute}"/>
+                    <Button Content="Contrast" Command="{Binding ImgDisplayer.ContrastCommand}" IsEnabled="{Binding ImgDisplayer.ContrastCommand.CanExecute}"/>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Padding="3" Header="Convultions">
+                <StackPanel Margin="3">
+                    <Button Content="Blur"></Button>
+                    <Button Content="Gaussian smoothing"></Button>
+                    <Button Content="Sharpen"></Button>
+                    <Button Content="Emboss"></Button>
+                </StackPanel>
+            </GroupBox>
+           <GroupBox Padding="3" Header="Editor">
+               <Button Content="Create your own convultion"/>
+           </GroupBox>
+       </StackPanel>
+        <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Right" Content="Load file" Padding="3" Margin="5" Command="{Binding OpenFileCommand}"/>
     </Grid>
 </Window>
