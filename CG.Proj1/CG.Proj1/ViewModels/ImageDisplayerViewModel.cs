@@ -49,7 +49,7 @@ namespace CG.Proj1.ViewModels
                 .ObservesProperty(() => RawImage);
             BrightnessPlusCommand = new DelegateCommand(() => BrightnessCorrection(+30), ImageValid)
                 .ObservesProperty(() => RawImage);
-            ContrastCommand = new DelegateCommand(() => ContrastEnhc(1.3), ImageValid)
+            ContrastCommand = new DelegateCommand(() => ContrastEnhancment(1.3), ImageValid)
                 .ObservesProperty(() => RawImage);
         }
 
@@ -131,7 +131,7 @@ namespace CG.Proj1.ViewModels
             }
             RaisePropertyChanged(nameof(ConvertedImageSource));
         }
-        private void ContrastEnhc(double slope)
+        private void ContrastEnhancment(double slope)
         {
             ConvertedImageSource = new WriteableBitmap(Image);
             unsafe
