@@ -71,6 +71,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\BitmapConverter.cs" />
+    <Compile Include="ViewModels\ConvolutionFilters.cs" />
+    <Compile Include="ViewModels\FunctionFilters.cs" />
     <Compile Include="ViewModels\ImageDisplayerViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\ImageDisplayer.xaml.cs">
