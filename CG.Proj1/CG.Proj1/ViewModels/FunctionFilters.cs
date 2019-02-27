@@ -33,7 +33,6 @@ namespace CG.Proj1.ViewModels
                 ConvertedImageSource.AddDirtyRect(new Int32Rect(0, 0, ConvertedImageSource.PixelWidth, ConvertedImageSource.PixelHeight));
                 ConvertedImageSource.Unlock();
             }
-            RaisePropertyChanged(nameof(ConvertedImageSource));
         }
 
         private void BrightnessCorrection(int correction)

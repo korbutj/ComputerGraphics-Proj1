@@ -9,6 +9,8 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
+using CG.Proj1.BaseClass;
+using CG.Proj1.ConvolutionFilters;
 using Prism.Commands;
 using Prism.Modularity;
 using Prism.Mvvm;
@@ -30,12 +32,16 @@ namespace CG.Proj1.ViewModels
         public ICommand BrightnessMinusCommand { get; set; }
         public ICommand BrightnessPlusCommand { get; set; }
         public ICommand ContrastCommand { get; set; }
-
+        public ICommand BlurCommand { get; set; }
+        public ICommand GaussSmoothingCommand { get; set; }
+        public ICommand SharpenCommand { get; set; }
+        public ICommand EmbossCommand { get; set; }
 
         public ImageDisplayerViewModel(Uri imgPath)
         {
             Image = new BitmapImage(imgPath);
-            ConvertedImageSource = new WriteableBitmap(Image);
+            var clone = new BitmapImage(imgPath);
+            ConvertedImageSource = new WriteableBitmap(clone);
             InverseCommand = new DelegateCommand(InverseBytes, ImageValid)
                 .ObservesProperty(() => Image);
             BrightnessMinusCommand = new DelegateCommand(() => BrightnessCorrection(-30), ImageValid)
@@ -43,6 +49,30 @@ namespace CG.Proj1.ViewModels
             BrightnessPlusCommand = new DelegateCommand(() => BrightnessCorrection(+30), ImageValid)
                 .ObservesProperty(() => Image);
             ContrastCommand = new DelegateCommand(() => ContrastEnhancment(1.3), ImageValid)
+                .ObservesProperty(() => Image);
+            BlurCommand = new DelegateCommand(() =>
+                {
+                    var copy = new WriteableBitmap(Image);
+                    ConvertedImageSource = copy.ConvolutionFilter(new PredefinedBlurConvolution());
+                }, ImageValid)
+                .ObservesProperty(() => Image);
+            GaussSmoothingCommand = new DelegateCommand(() =>
+                {
+                    var copy = new WriteableBitmap(Image);
+                    ConvertedImageSource = copy.ConvolutionFilter(new PredefinedGaussianSmoothing());
+                }, ImageValid)
+                .ObservesProperty(() => Image);
+            SharpenCommand = new DelegateCommand(() =>
+                {
+                    var copy = new WriteableBitmap(Image);
+                    ConvertedImageSource = copy.ConvolutionFilter(new PredefinedSharpen());
+                }, ImageValid)
+                .ObservesProperty(() => Image);
+            EmbossCommand = new DelegateCommand(() =>
+                {
+                    var copy = new WriteableBitmap(Image);
+                    ConvertedImageSource = copy.ConvolutionFilter(new PredefinedEmboss());
+                }, ImageValid)
                 .ObservesProperty(() => Image);
         }
         
