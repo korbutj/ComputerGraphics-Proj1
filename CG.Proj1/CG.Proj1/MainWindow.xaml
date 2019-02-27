@@ -37,7 +37,7 @@
                     <Button Content="Contrast" Command="{Binding ImgDisplayer.ContrastCommand}" IsEnabled="{Binding ImgDisplayer.ContrastCommand.CanExecute}"/>
                 </StackPanel>
             </GroupBox>
-            <GroupBox Padding="3" Header="Convultions">
+            <GroupBox Padding="3" Header="Convolutions">
                 <StackPanel Margin="3">
                     <Button Content="Blur" Command="{Binding ImgDisplayer.BlurCommand}" 
                             IsEnabled="{Binding ImgDisplayer.BlurCommand.CanExecute}"/>
