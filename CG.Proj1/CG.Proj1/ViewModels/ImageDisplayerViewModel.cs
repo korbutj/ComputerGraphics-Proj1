@@ -36,6 +36,8 @@ namespace CG.Proj1.ViewModels
         public ICommand GaussSmoothingCommand { get; set; }
         public ICommand SharpenCommand { get; set; }
         public ICommand EmbossCommand { get; set; }
+        public ICommand EdgeYCommand { get; set; }
+        public ICommand EdgeXCommand { get; set; }
 
         public ImageDisplayerViewModel(Uri imgPath)
         {
@@ -72,6 +74,18 @@ namespace CG.Proj1.ViewModels
                 {
                     var copy = new WriteableBitmap(Image);
                     ConvertedImageSource = copy.ConvolutionFilter(new PredefinedEmboss());
+                }, ImageValid)
+                .ObservesProperty(() => Image);
+            EdgeXCommand = new DelegateCommand(() =>
+                {
+                    var copy = new WriteableBitmap(Image);
+                    ConvertedImageSource = copy.ConvolutionFilter(new PredefinedEdgeDetectionX());
+                }, ImageValid)
+                .ObservesProperty(() => Image);
+            EdgeYCommand = new DelegateCommand(() =>
+                {
+                    var copy = new WriteableBitmap(Image);
+                    ConvertedImageSource = copy.ConvolutionFilter(new PredefinedEdgeDetectionY());
                 }, ImageValid)
                 .ObservesProperty(() => Image);
         }

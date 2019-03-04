@@ -28,7 +28,8 @@
         </Grid.RowDefinitions>
         <GroupBox Header="Display area" Grid.Column="0" Grid.RowSpan="2">
             <views:ImageDisplayer DataContext="{Binding ImgDisplayer}"/></GroupBox>
-       <StackPanel Grid.Row="0" Grid.Column="2">
+        <ScrollViewer Grid.Row="0" Grid.Column="2">
+            <StackPanel>
             <GroupBox Padding="3" Header="Functions" Margin="0,0,0,10">
                 <StackPanel Margin="3">
                     <Button Content="Inversion" Command="{Binding ImgDisplayer.InverseCommand}" IsEnabled="{Binding ImgDisplayer.InverseCommand.CanExecute}"/>
@@ -47,12 +48,17 @@
                             IsEnabled="{Binding ImgDisplayer.SharpenCommand.CanExecute}"/>
                     <Button Content="Emboss" Command="{Binding ImgDisplayer.EmbossCommand}"
                             IsEnabled="{Binding ImgDisplayer.EmbossCommand.CanExecute}"/>
+                    <Button Content="Edge X" Command="{Binding ImgDisplayer.EdgeXCommand}"
+                            IsEnabled="{Binding ImgDisplayer.EmbossCommand.CanExecute}"/>
+                    <Button Content="Edge Y" Command="{Binding ImgDisplayer.EdgeYCommand}"
+                            IsEnabled="{Binding ImgDisplayer.EmbossCommand.CanExecute}"/>
                 </StackPanel>
             </GroupBox>
            <GroupBox Padding="3" Header="Editor">
-               <Button Content="Create your own convultion"/>
+                <Button Content="Create your own convolution" Command="{Binding ConvolutionEditorCommand}"/>
            </GroupBox>
        </StackPanel>
+        </ScrollViewer>
         <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" 
                 HorizontalAlignment="Right" Content="Load file" 
                 Padding="3" Margin="5" Width="120"

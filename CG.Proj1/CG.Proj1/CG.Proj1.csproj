@@ -73,14 +73,22 @@
     <Compile Include="BaseClass\ConvolutionFilterBase.cs" />
     <Compile Include="Converters\BitmapConverter.cs" />
     <Compile Include="ConvolutionFilters\PredefinedBlurConvolution.cs" />
+    <Compile Include="ConvolutionFilters\PredefinedEdgeDetectionY.cs" />
+    <Compile Include="ConvolutionFilters\PredefinedEdgeDetectionX.cs" />
     <Compile Include="ConvolutionFilters\PredefinedEmboss.cs" />
     <Compile Include="ConvolutionFilters\PredefinedGaussianSmoothing.cs" />
     <Compile Include="ConvolutionFilters\PredefinedSharpen.cs" />
     <Compile Include="ViewModels\FunctionFilters.cs" />
     <Compile Include="ViewModels\ImageDisplayerViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="Views\ConvolutionMatrixEditor.xaml.cs">
+      <DependentUpon>ConvolutionMatrixEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ImageDisplayer.xaml.cs">
       <DependentUpon>ImageDisplayer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PickSizes.xaml.cs">
+      <DependentUpon>PickSizes.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -94,7 +102,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\ConvolutionMatrixEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ImageDisplayer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PickSizes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
