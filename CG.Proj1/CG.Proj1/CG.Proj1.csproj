@@ -72,6 +72,7 @@
     </ApplicationDefinition>
     <Compile Include="BaseClass\ConvolutionFilterBase.cs" />
     <Compile Include="Converters\BitmapConverter.cs" />
+    <Compile Include="ConvolutionFilters\CustomConvolution.cs" />
     <Compile Include="ConvolutionFilters\PredefinedBlurConvolution.cs" />
     <Compile Include="ConvolutionFilters\PredefinedEdgeDetectionY.cs" />
     <Compile Include="ConvolutionFilters\PredefinedEdgeDetectionX.cs" />

@@ -9,25 +9,15 @@ namespace CG.Proj1.BaseClass
             get;
         }
 
+        protected double factor;
+        public abstract double Factor { get; set; }
 
-        public abstract double Factor
-        {
-            get;
-        }
+        protected double bias;
 
+        public abstract double Bias { get; set; }
 
-        public abstract double Bias
-        {
-            get;
-        }
-
-
-        public abstract double[,] FilterMatrix
-        {
-            get;
-        }
-
-
+        protected double[,] filterMatrix;
+        public abstract double[,] FilterMatrix { get; set; }
     }
 
     public static class ExtensionsWriteableBitmap
