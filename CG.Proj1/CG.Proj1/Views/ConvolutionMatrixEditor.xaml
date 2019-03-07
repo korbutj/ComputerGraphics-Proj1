@@ -5,8 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CG.Proj1.Views"
         mc:Ignorable="d"
-        Title="ConvolutionMatrixEditor" Height="450" Width="800">
-    <Grid x:Name="GridLayout">
-        
+        WindowStartupLocation="CenterScreen"
+        Title="ConvolutionMatrixEditor">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid x:Name="GridLayout" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2">
+
+        </Grid>
+        <StackPanel Grid.Column="1" Grid.Row="0" Margin="5" Width="100" HorizontalAlignment="Stretch">
+            <Label>Factor</Label>
+            <TextBox Name="FactorBox"></TextBox>
+            <Label>Bias</Label>
+            <TextBox Name="BiasBox"></TextBox>
+            <Button Margin="0,15,0,0" Content="Load blur (all 1)" Click="Predefined_OnClick"></Button>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="1">
+            <Button Content="Apply" Click="ButtonBase_OnClick"></Button>
+        </StackPanel>
     </Grid>
 </Window>

@@ -18,7 +18,7 @@
         </Grid.ColumnDefinitions>
 
         <Image Grid.Column="0" Source="{Binding Image}" Stretch="None"/>
-        <GridSplitter Grid.Column="1" Width="5" Background="MediumPurple"
+        <GridSplitter Grid.Column="1" Width="5" Background="DeepSkyBlue"
                       VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
         <Image Grid.Column="2" Source="{Binding ConvertedImageSource}" Stretch="None"/>
     </Grid>

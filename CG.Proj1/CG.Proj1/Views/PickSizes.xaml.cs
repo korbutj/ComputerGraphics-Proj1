@@ -12,11 +12,13 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using CG.Proj1.ConvolutionFilters;
 
 namespace CG.Proj1.Views
 {
     public partial class PickSizes : Window
     {
+        public CustomConvolution Convolution { get; set; }
         public PickSizes()
         {
             InitializeComponent();
@@ -32,6 +34,10 @@ namespace CG.Proj1.Views
             var regex = new Regex("[^1]*[^3]*[^5]*[^7]*[^9]*");
             var rowsMatch = regex.Match(RowsBox.Text);
             var columnsMatch = regex.Match(ColumnsBox.Text);
+            var matrixEditor = new ConvolutionMatrixEditor(int.Parse(RowsBox.Text), int.Parse(ColumnsBox.Text));
+            this.DialogResult = matrixEditor.ShowDialog();
+            Convolution = matrixEditor.Convolution;
+            this.Close();
         }
     }
 }

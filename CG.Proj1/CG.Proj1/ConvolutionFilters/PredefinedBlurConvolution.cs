@@ -7,7 +7,7 @@ namespace CG.Proj1.ConvolutionFilters
         public override string FilterName => "Blur";
         public override double Factor
         {
-            get => 1.0;
+            get => 0.3;
             set => factor = value;
         }
 
