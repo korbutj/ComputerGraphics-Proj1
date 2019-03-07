@@ -11,10 +11,11 @@ namespace CG.Proj1.ViewModels
         public ICommand OpenFileCommand { get; set; }
 
         private ImageDisplayerViewModel imgDisplayer;
+
         public ImageDisplayerViewModel ImgDisplayer
         {
-            get => imgDisplayer;
-            set => SetProperty(ref imgDisplayer, value);
+            get { return imgDisplayer; }
+            set { SetProperty(ref imgDisplayer, value); }
         }
 
         public MainWindowViewModel()
@@ -33,7 +34,8 @@ namespace CG.Proj1.ViewModels
             {
                 ImgDisplayer = new ImageDisplayerViewModel(new Uri(dialog.FileName));
             }
-;
+
+            ;
         }
     }
 }

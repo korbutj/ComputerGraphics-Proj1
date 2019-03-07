@@ -24,8 +24,8 @@ namespace CG.Proj1.ViewModels
         private WriteableBitmap convertedImageSource;
         public WriteableBitmap ConvertedImageSource
         {
-            get => convertedImageSource;
-            set => SetProperty(ref convertedImageSource, value);
+            get { return convertedImageSource; }
+            set { SetProperty(ref convertedImageSource, value); }
         }
 
         public ICommand InverseCommand { get; set; }
