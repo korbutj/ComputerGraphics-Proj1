@@ -25,6 +25,7 @@
             <Label>Bias</Label>
             <TextBox Name="BiasBox"></TextBox>
             <Button Margin="0,15,0,0" Content="Load blur (all 1)" Click="Predefined_OnClick"></Button>
+            <Button Margin="0,15,0,0" Content="Load chess (all 1)" Click="PredefinedChess_OnClick"></Button>
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.Row="1">
             <Button Content="Apply" Click="ButtonBase_OnClick"></Button>

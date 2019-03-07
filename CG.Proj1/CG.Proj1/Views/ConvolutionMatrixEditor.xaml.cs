@@ -89,5 +89,23 @@ namespace CG.Proj1.Views
                 box.Text = "1";
             }
         }
+
+        private void PredefinedChess_OnClick(object sender, RoutedEventArgs e)
+        {
+            int n = 0;
+            for (int i = 0; i < columns; i++)
+            {
+                for (int j = 0; j < rows; j++)
+                {
+                    if (n % 2 > 0)
+                    {
+                        textBoxes[i,j].Text = "1";
+                    }
+                    n++;
+                }
+                
+                
+            }
+        }
     }
 }

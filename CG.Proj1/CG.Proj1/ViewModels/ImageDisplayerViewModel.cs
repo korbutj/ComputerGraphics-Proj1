@@ -22,7 +22,7 @@ namespace CG.Proj1.ViewModels
         private Uri imgPathUri;
         public Uri ImgPathUri
         {
-            get => imgPathUri;
+            get { return imgPathUri; }
             set
             {
                 SetProperty(ref imgPathUri, value);
@@ -36,8 +36,8 @@ namespace CG.Proj1.ViewModels
         private BitmapImage image;
         public BitmapImage Image
         {
-            get => image;
-            set => SetProperty(ref image, value);
+            get { return image; }
+            set { SetProperty(ref image, value); }
         }
 
         private WriteableBitmap convertedImageSource;
