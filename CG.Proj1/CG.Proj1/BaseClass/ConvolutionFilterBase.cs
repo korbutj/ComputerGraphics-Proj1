@@ -720,13 +720,13 @@ namespace CG.Proj1.BaseClass
                             filterY <= filterHeightOffset; filterY++)
                         {
                             for (var filterX = 1;
-                                filterX <= filterWidthOffset; filterX++)
+                                filterX < filterWidthOffset; filterX++)
                             {
 
 
                                 calcOffset = byteOffset +
                                              (sourceBitmap.PixelWidth * 4) +
-                                             (filterY * sourceBitmap.BackBufferStride);
+                                             (Math.Abs(filterY)-1 * sourceBitmap.BackBufferStride);
 
 
                                 blue += (double)(pixelBuffer[calcOffset]) *

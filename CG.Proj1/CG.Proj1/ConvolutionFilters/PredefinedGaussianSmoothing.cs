@@ -7,7 +7,7 @@ namespace CG.Proj1.ConvolutionFilters
         public override string FilterName => "Gaussian Smoothing";
         public override double Factor
         {
-            get { return 1.0; }
+            get { return 0.3; }
             set {
                     factor = value;
                 }
