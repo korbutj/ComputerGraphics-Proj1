@@ -626,7 +626,7 @@ namespace CG.Proj1.BaseClass
                             {
                                 calcOffset = byteOffset +
                                              (Math.Abs(filterX) * 4) +
-                                             (Math.Abs(filterY) * sourceBitmap.BackBufferStride);
+                                             (filterY > 0 ? -filterY : filterY * sourceBitmap.BackBufferStride);
                                 blue += (double)(pixelBuffer[calcOffset]) *
                                         filter.FilterMatrix[filterY + filterHeightOffset,
                                             filterX + filterWidthOffset];
@@ -827,9 +827,9 @@ namespace CG.Proj1.BaseClass
                             {
 
 
-                                calcOffset = byteOffset +
-                                             (sourceBitmap.PixelHeight * 4) +
-                                             (filterX * sourceBitmap.BackBufferStride);
+                                calcOffset = sourceBitmap.PixelHeight *
+                                              sourceBitmap.BackBufferStride +
+                                              filterX * 4;
 
 
                                 blue += (double)(pixelBuffer[calcOffset]) *
@@ -901,8 +901,8 @@ namespace CG.Proj1.BaseClass
                                 filterX++)
                             {
                                 calcOffset = byteOffset +
-                                             (Math.Abs(filterX) * 4) +
-                                             (Math.Abs(filterY) * sourceBitmap.BackBufferStride);
+                                             (filterX > 0 ? -filterX : filterX * 4) +
+                                             (filterY > 0 ? -filterY : filterY * sourceBitmap.BackBufferStride);
                                 blue += (double)(pixelBuffer[calcOffset]) *
                                         filter.FilterMatrix[filterY + filterHeightOffset,
                                             filterX + filterWidthOffset];
