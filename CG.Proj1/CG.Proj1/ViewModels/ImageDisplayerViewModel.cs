@@ -19,7 +19,26 @@ namespace CG.Proj1.ViewModels
 {
     public partial class ImageDisplayerViewModel : BindableBase
     {
-        public BitmapImage Image { get; set; }
+        private Uri imgPathUri;
+        public Uri ImgPathUri
+        {
+            get => imgPathUri;
+            set
+            {
+                SetProperty(ref imgPathUri, value);
+                Image = new BitmapImage(ImgPathUri);
+                var clone = new BitmapImage(ImgPathUri);
+                ConvertedImageSource = new WriteableBitmap(clone);
+            }
+        }
+
+
+        private BitmapImage image;
+        public BitmapImage Image
+        {
+            get => image;
+            set => SetProperty(ref image, value);
+        }
 
         private WriteableBitmap convertedImageSource;
         public WriteableBitmap ConvertedImageSource
@@ -36,50 +55,43 @@ namespace CG.Proj1.ViewModels
         public ICommand GaussSmoothingCommand { get; set; }
         public ICommand SharpenCommand { get; set; }
         public ICommand EmbossCommand { get; set; }
+        public ICommand EdgeYCommand { get; set; }
+        public ICommand EdgeXCommand { get; set; }
 
-        public ImageDisplayerViewModel(Uri imgPath)
+        public ImageDisplayerViewModel()
         {
-            Image = new BitmapImage(imgPath);
-            var clone = new BitmapImage(imgPath);
-            ConvertedImageSource = new WriteableBitmap(clone);
             InverseCommand = new DelegateCommand(InverseBytes, ImageValid)
-                .ObservesProperty(() => Image);
+                .ObservesProperty(() => ConvertedImageSource);
             BrightnessMinusCommand = new DelegateCommand(() => BrightnessCorrection(-30), ImageValid)
-                .ObservesProperty(() => Image);
+                .ObservesProperty(() => ConvertedImageSource);
             BrightnessPlusCommand = new DelegateCommand(() => BrightnessCorrection(+30), ImageValid)
-                .ObservesProperty(() => Image);
+                .ObservesProperty(() => ConvertedImageSource);
             ContrastCommand = new DelegateCommand(() => ContrastEnhancment(1.3), ImageValid)
+                .ObservesProperty(() => ConvertedImageSource);
+            BlurCommand = new DelegateCommand(() => ConvolutionFilter(new PredefinedBlurConvolution()), ImageValid)
                 .ObservesProperty(() => Image);
-            BlurCommand = new DelegateCommand(() =>
-                {
-                    var copy = new WriteableBitmap(Image);
-                    ConvertedImageSource = copy.ConvolutionFilter(new PredefinedBlurConvolution());
-                }, ImageValid)
-                .ObservesProperty(() => Image);
-            GaussSmoothingCommand = new DelegateCommand(() =>
-                {
-                    var copy = new WriteableBitmap(Image);
-                    ConvertedImageSource = copy.ConvolutionFilter(new PredefinedGaussianSmoothing());
-                }, ImageValid)
-                .ObservesProperty(() => Image);
-            SharpenCommand = new DelegateCommand(() =>
-                {
-                    var copy = new WriteableBitmap(Image);
-                    ConvertedImageSource = copy.ConvolutionFilter(new PredefinedSharpen());
-                }, ImageValid)
-                .ObservesProperty(() => Image);
-            EmbossCommand = new DelegateCommand(() =>
-                {
-                    var copy = new WriteableBitmap(Image);
-                    ConvertedImageSource = copy.ConvolutionFilter(new PredefinedEmboss());
-                }, ImageValid)
-                .ObservesProperty(() => Image);
+            GaussSmoothingCommand = new DelegateCommand(() => ConvolutionFilter(new PredefinedGaussianSmoothing()), ImageValid)
+                .ObservesProperty(() => ConvertedImageSource);
+            SharpenCommand = new DelegateCommand(() => ConvolutionFilter(new PredefinedSharpen()), ImageValid)
+                .ObservesProperty(() => ConvertedImageSource);
+            EmbossCommand = new DelegateCommand(() => ConvolutionFilter(new PredefinedEmboss()), ImageValid)
+                .ObservesProperty(() => ConvertedImageSource);
+            EdgeXCommand = new DelegateCommand(() => ConvolutionFilter(new PredefinedEdgeDetectionX()), ImageValid)
+                .ObservesProperty(() => ConvertedImageSource);
+            EdgeYCommand = new DelegateCommand(() => ConvolutionFilter(new PredefinedEdgeDetectionY()), ImageValid)
+                .ObservesProperty(() => ConvertedImageSource);
         }
-        
+
 
         private bool ImageValid()
         {
-            return Image != null;
+            return ConvertedImageSource != null;
+        }
+
+        public void ConvolutionFilter(ConvolutionFilterBase filter)
+        {
+            var copy = new WriteableBitmap(Image);
+            ConvertedImageSource = copy.ConvolutionFilter(filter);
         }
     }
 }

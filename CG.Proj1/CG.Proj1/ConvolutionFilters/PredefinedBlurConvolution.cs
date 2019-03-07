@@ -5,8 +5,22 @@ namespace CG.Proj1.ConvolutionFilters
     public class PredefinedBlurConvolution : ConvolutionFilterBase
     {
         public override string FilterName => "Blur";
-        public override double Factor => 1.0;
-        public override double Bias => 0.0;
-        public override double[,] FilterMatrix => new double[,] { { 0, 0.2, 0 }, { 0.2, 0.2, 0.2 }, { 0, 0.2, 0.2 } };
+        public override double Factor
+        {
+            get => 0.3;
+            set => factor = value;
+        }
+
+        public override double Bias
+        {
+            get => 0.0;
+            set => bias = value;
+        }
+
+        public override double[,] FilterMatrix
+        {
+            get => new double[,] {{1, 1, 1}, {1, 1, 1}, {1, 1, 1}};
+            set => filterMatrix = value;
+        }
     }
 }

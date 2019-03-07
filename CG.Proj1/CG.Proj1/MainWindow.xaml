@@ -7,13 +7,12 @@
         xmlns:views="clr-namespace:CG.Proj1.Views"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Project 1" MinHeight="475" MinWidth="600" Height="455" Width="500"
+        Title="Project 1" MinHeight="475" MinWidth="600" Height="600" Width="950"
         Background="LightSteelBlue">
     <Window.Resources>
         <Style TargetType="{x:Type Button}">
             <Setter Property="Margin" Value="3"/>
             <Setter Property="Height" Value="25"/>
-
         </Style>
     </Window.Resources>
     <Grid>
@@ -26,33 +25,34 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
         </Grid.RowDefinitions>
-        <GroupBox Header="Display area" Grid.Column="0" Grid.RowSpan="2">
-            <views:ImageDisplayer DataContext="{Binding ImgDisplayer}"/></GroupBox>
-       <StackPanel Grid.Row="0" Grid.Column="2">
-            <GroupBox Padding="3" Header="Functions" Margin="0,0,0,10">
-                <StackPanel Margin="3">
-                    <Button Content="Inversion" Command="{Binding ImgDisplayer.InverseCommand}" IsEnabled="{Binding ImgDisplayer.InverseCommand.CanExecute}"/>
-                    <Button Content="Brightness+" Command="{Binding ImgDisplayer.BrightnessPlusCommand}" IsEnabled="{Binding ImgDisplayer.BrightnessPlusCommand.CanExecute}"/>
-                    <Button Content="Brightness-" Command="{Binding ImgDisplayer.BrightnessMinusCommand}" IsEnabled="{Binding ImgDisplayer.BrightnessMinusCommand.CanExecute}"/>
-                    <Button Content="Contrast" Command="{Binding ImgDisplayer.ContrastCommand}" IsEnabled="{Binding ImgDisplayer.ContrastCommand.CanExecute}"/>
-                </StackPanel>
-            </GroupBox>
-            <GroupBox Padding="3" Header="Convultions">
-                <StackPanel Margin="3">
-                    <Button Content="Blur" Command="{Binding ImgDisplayer.BlurCommand}" 
-                            IsEnabled="{Binding ImgDisplayer.BlurCommand.CanExecute}"/>
-                    <Button Content="Gaussian smoothing" Command="{Binding ImgDisplayer.GaussSmoothingCommand}" 
-                            IsEnabled="{Binding ImgDisplayer.GaussSmoothingCommand.CanExecute}"/>
-                    <Button Content="Sharpen" Command="{Binding ImgDisplayer.SharpenCommand}" 
-                            IsEnabled="{Binding ImgDisplayer.SharpenCommand.CanExecute}"/>
-                    <Button Content="Emboss" Command="{Binding ImgDisplayer.EmbossCommand}"
-                            IsEnabled="{Binding ImgDisplayer.EmbossCommand.CanExecute}"/>
-                </StackPanel>
-            </GroupBox>
-           <GroupBox Padding="3" Header="Editor">
-               <Button Content="Create your own convultion"/>
-           </GroupBox>
-       </StackPanel>
+        <GroupBox Header="Display area" Grid.Column="0" Grid.RowSpan="2" Background="Transparent">
+            <views:ImageDisplayer DataContext="{Binding ImgDisplayer}"/>
+        </GroupBox>
+        <ScrollViewer Grid.Row="0" Grid.Column="2">
+            <StackPanel>
+                <GroupBox Padding="3" Header="Functions" Margin="0,0,0,10">
+                    <StackPanel Margin="3">
+                        <Button Content="Inversion" Command="{Binding ImgDisplayer.InverseCommand}" />
+                        <Button Content="Brightness+" Command="{Binding ImgDisplayer.BrightnessPlusCommand}" />
+                        <Button Content="Brightness-" Command="{Binding ImgDisplayer.BrightnessMinusCommand}"/>
+                        <Button Content="Contrast" Command="{Binding ImgDisplayer.ContrastCommand}"/>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Padding="3" Header="Convolutions">
+                    <StackPanel Margin="3">
+                        <Button Content="Blur" Command="{Binding ImgDisplayer.BlurCommand}" />
+                        <Button Content="Gaussian smoothing" Command="{Binding ImgDisplayer.GaussSmoothingCommand}" />
+                        <Button Content="Sharpen" Command="{Binding ImgDisplayer.SharpenCommand}" />
+                        <Button Content="Emboss" Command="{Binding ImgDisplayer.EmbossCommand}"/>
+                        <Button Content="Edge X" Command="{Binding ImgDisplayer.EdgeXCommand}"/>
+                        <Button Content="Edge Y" Command="{Binding ImgDisplayer.EdgeYCommand}"/>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Padding="3" Header="Editor">
+                    <Button Content="Create your own convolution" Command="{Binding ConvolutionEditorCommand}"/>
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
         <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" 
                 HorizontalAlignment="Right" Content="Load file" 
                 Padding="3" Margin="5" Width="120"
