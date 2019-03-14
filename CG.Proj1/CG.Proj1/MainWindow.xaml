@@ -54,6 +54,11 @@
                 </GroupBox>
             </StackPanel>
         </ScrollViewer>-->
+        <ScrollViewer Grid.Row="0" Grid.Column="2">
+            <StackPanel>
+                <Button Content="Thresholding" Command="{Binding ImgDisplayer.ThresholdCommand}"/>
+            </StackPanel>
+        </ScrollViewer>
         <Button Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right" Content="Load file" 
                 Padding="3" Margin="5" Width="120"
                 Command="{Binding OpenFileCommand}"/>
