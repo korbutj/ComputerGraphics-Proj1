@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -21,30 +22,7 @@ namespace CG.Proj1.ViewModels
                 unsafe
                 {
                     Image = new WriteableBitmap(new BitmapImage(ImgPathUri));
-                    var formatted = new FormatConvertedBitmap();
-                    formatted.BeginInit();
-                    formatted.Source = Image;
-                    //formatted.DestinationFormat = PixelFormats.Gray8;
-                    switch (GrayColors)
-                    {
-                        case 2:
-                            formatted.DestinationFormat = PixelFormats.BlackWhite;
-                            formatted.DestinationPalette = BitmapPalettes.BlackAndWhite;
-                            break;
-
-                        case 4:
-                            formatted.DestinationFormat = PixelFormats.Gray2;
-                            formatted.DestinationPalette = BitmapPalettes.Gray4;
-                            break;
-
-                        case 16:
-                            formatted.DestinationFormat = PixelFormats.Gray4;
-                            formatted.DestinationPalette = BitmapPalettes.Gray16;
-                            break;
-
-                    }
-                    formatted.EndInit();
-                    ConvertedImageSource = new WriteableBitmap(formatted);
+                    ConvertImage();
                 }
             }
         }
@@ -59,7 +37,18 @@ namespace CG.Proj1.ViewModels
             set
             {
                 SetProperty(ref grayColors, value);
+                if (Image != null)
+                {
+                    ConvertImage();
+                }
             }
+        }
+
+        private double tParameter;
+        public double TParameter
+        {
+            get { return tParameter; }
+            set { SetProperty(ref tParameter, value); }
         }
 
         private WriteableBitmap image;
@@ -80,33 +69,120 @@ namespace CG.Proj1.ViewModels
 
         public BlackWhiteDisplayer()
         {
-            ThresholdCommand = new DelegateCommand(() => Thresholding(126), () => Image != null)
+            ThresholdCommand = new DelegateCommand(Thresholding, () => Image != null)
                 .ObservesProperty(() => Image);
             GrayColors = 2;
+            TParameter = 1;
         }
 
-        public void Thresholding(int value)
+        private void ConvertImage()
+        {
+            var formatted = new FormatConvertedBitmap();
+            formatted.BeginInit();
+            formatted.Source = Image;
+            switch (GrayColors)
+            {
+                case 2:
+                    formatted.DestinationFormat = PixelFormats.BlackWhite;
+                    formatted.DestinationPalette = BitmapPalettes.BlackAndWhite;
+                    break;
+
+                case 4:
+                    formatted.DestinationFormat = PixelFormats.Gray2;
+                    formatted.DestinationPalette = BitmapPalettes.Gray4;
+                    break;
+
+                case 16:
+                    formatted.DestinationFormat = PixelFormats.Gray4;
+                    formatted.DestinationPalette = BitmapPalettes.Gray16;
+                    break;
+
+            }
+            formatted.EndInit();
+            ConvertedImageSource = new WriteableBitmap(formatted);
+        }
+
+        public void Thresholding()
         {
             unsafe
             {
+                var borders = new byte[GrayColors];
+                for (int i = 1; i < GrayColors + 1; i++)
+                {
+                    borders[i - 1] = (byte)(255 * i / GrayColors - 1);
+                }
                 var copy = new WriteableBitmap(ConvertedImageSource);
                 copy.Lock();
                 ConvertedImageSource.Lock();
                 var copyPtr = (byte*)copy.BackBuffer;
                 var truPtr = (byte*)ConvertedImageSource.BackBuffer;
-                for (int y = 0; y < ConvertedImageSource.PixelHeight; y++)
+                for (int y = 0; y < copy.PixelHeight; y++)
                 {
-                    for (int x = 0; x < ConvertedImageSource.PixelWidth; x++)
+                    for (int x = 0; x < copy.PixelWidth; x++)
                     {
-                        var byteOffset = (x * 3) + (y * ConvertedImageSource.BackBufferStride);
-                        copyPtr[byteOffset] = truPtr[byteOffset] > value ? (byte)255 : (byte)0;
-                        copyPtr[byteOffset + 1] = truPtr[byteOffset + 1] > value ? (byte)255 : (byte)0;
-                        copyPtr[byteOffset + 2] = truPtr[byteOffset + 2] > value ? (byte)255 : (byte)0;
+                        var byteOffset = (x * 3) + (y * copy.BackBufferStride);
+
+                        if (copyPtr[byteOffset] == 255)
+                            copyPtr[byteOffset] = borders[borders.Length - 1];
+                        var index = (int)((copyPtr[byteOffset] * (GrayColors - 1))/ 255);
+                        if (copyPtr[byteOffset] < (borders[index] + ((borders[index + 1] - borders[index]) * TParameter)))
+                        {
+                            copyPtr[byteOffset] = borders[index];
+                        }
+                        else
+                        {
+                            copyPtr[byteOffset] = borders[index + 1];
+                        }
+
+                        if (copyPtr[byteOffset + 1] == 255)
+                            copyPtr[byteOffset + 1] = borders[borders.Length - 1];
+                        var index1 = (int)((copyPtr[byteOffset + 1] * (GrayColors - 1) )/ 255);
+                        if (copyPtr[byteOffset+1] < (borders[index1] + ((borders[index1 + 1] - borders[index1]) * TParameter)))
+                        {
+                            copyPtr[byteOffset+1] = borders[index1];
+                        }
+                        else
+                        {
+                            copyPtr[byteOffset+1] = borders[index1 + 1];
+                        }
+
+                        if (copyPtr[byteOffset+2] == 255)
+                            copyPtr[byteOffset+2] = borders[borders.Length - 1];
+                        var index2 = (int)((copyPtr[byteOffset + 2] * (GrayColors - 1)) / 255);
+                        if (copyPtr[byteOffset+2] < (borders[index2] + ((borders[index2 + 1] - borders[index2]) * TParameter)))
+                        {
+                            copyPtr[byteOffset+2] = borders[index2];
+                        }
+                        else
+                        {
+                            copyPtr[byteOffset+2] = borders[index2 + 1];
+                        }
+                        //copyPtr[byteOffset] = copyPtr[byteOffset] > 127 ? (byte)255 : (byte)0;
+                        //copyPtr[byteOffset+1] = (byte) copyPtr[byteOffset+1] > 127 ? (byte)255 : (byte)0;
+                        //copyPtr[byteOffset+2] = (byte) copyPtr[byteOffset+2] > 127 ? (byte)255 : (byte)0;
+                        //ThresholdPixel(ref copyPtr[byteOffset], borders);
+                        //ThresholdPixel(ref copyPtr[byteOffset + 1], borders);
+                        //ThresholdPixel(ref copyPtr[byteOffset + 2], borders);
                     }
                 }
                 ConvertedImageSource.Unlock();
                 ConvertedImageSource = copy;
                 ConvertedImageSource.Unlock();
+            }
+        }
+
+        private void ThresholdPixel(ref byte pixel, byte[] borders)
+        {
+            if (pixel == 255)
+                pixel = borders[borders.Length - 1];
+            var index = (int)(pixel * (GrayColors - 1) / 255);
+            if(pixel < (borders[index] + ((borders[index+1] - borders[index])*TParameter)))
+            {
+                pixel = borders[index];
+            }
+            else
+            {
+                pixel = borders[index+1];
             }
         }
     }

@@ -57,6 +57,10 @@
         <ScrollViewer Grid.Row="0" Grid.Column="2">
             <StackPanel>
                 <Button Content="Thresholding" Command="{Binding ImgDisplayer.ThresholdCommand}"/>
+                <StackPanel>
+                    <Label>T:</Label>
+                    <TextBox Text="{Binding ImgDisplayer.TParamater}"/>
+                </StackPanel>
             </StackPanel>
         </ScrollViewer>
         <StackPanel Grid.Row="1" Grid.Column="2">
