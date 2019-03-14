@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Input;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -13,6 +14,8 @@ namespace CG.Proj1.ViewModels
             get { return imgDisplayer; }
             set { SetProperty(ref imgDisplayer, value); }
         }
+
+        public List<int> GrayScales => new List<int>() { 2, 4, 16 };
 
         public ICommand OpenFileCommand { get; set; }
 

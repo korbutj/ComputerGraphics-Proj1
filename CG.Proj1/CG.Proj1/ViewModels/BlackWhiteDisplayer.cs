@@ -8,6 +8,7 @@ using Prism.Mvvm;
 
 namespace CG.Proj1.ViewModels
 {
+    //TODO - Project assignment - average dithering + octree q
     public class BlackWhiteDisplayer : BindableBase
     {
         private Uri imgPathUri;
@@ -23,11 +24,41 @@ namespace CG.Proj1.ViewModels
                     var formatted = new FormatConvertedBitmap();
                     formatted.BeginInit();
                     formatted.Source = Image;
-                    formatted.DestinationFormat = PixelFormats.Gray8;
-                    formatted.DestinationPalette = BitmapPalettes.Gray256;
+                    //formatted.DestinationFormat = PixelFormats.Gray8;
+                    switch (GrayColors)
+                    {
+                        case 2:
+                            formatted.DestinationFormat = PixelFormats.BlackWhite;
+                            formatted.DestinationPalette = BitmapPalettes.BlackAndWhite;
+                            break;
+
+                        case 4:
+                            formatted.DestinationFormat = PixelFormats.Gray2;
+                            formatted.DestinationPalette = BitmapPalettes.Gray4;
+                            break;
+
+                        case 16:
+                            formatted.DestinationFormat = PixelFormats.Gray4;
+                            formatted.DestinationPalette = BitmapPalettes.Gray16;
+                            break;
+
+                    }
                     formatted.EndInit();
                     ConvertedImageSource = new WriteableBitmap(formatted);
                 }
+            }
+        }
+
+        private int grayColors;
+        public int GrayColors
+        {
+            get
+            {
+                return grayColors;
+            }
+            set
+            {
+                SetProperty(ref grayColors, value);
             }
         }
 
@@ -51,6 +82,7 @@ namespace CG.Proj1.ViewModels
         {
             ThresholdCommand = new DelegateCommand(() => Thresholding(126), () => Image != null)
                 .ObservesProperty(() => Image);
+            GrayColors = 2;
         }
 
         public void Thresholding(int value)

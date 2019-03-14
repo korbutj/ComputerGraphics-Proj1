@@ -23,7 +23,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
         </Grid.RowDefinitions>
         <GroupBox Header="Display area" Grid.Column="0" Grid.RowSpan="2" Background="Transparent">
             <views:ImageDisplayer DataContext="{Binding ImgDisplayer}"/>
@@ -59,8 +59,14 @@
                 <Button Content="Thresholding" Command="{Binding ImgDisplayer.ThresholdCommand}"/>
             </StackPanel>
         </ScrollViewer>
-        <Button Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right" Content="Load file" 
-                Padding="3" Margin="5" Width="120"
+        <StackPanel Grid.Row="1" Grid.Column="2">
+            <ComboBox Margin="3" SelectedItem="{Binding ImgDisplayer.GrayColors}"
+                      ItemsSource="{Binding GrayScales}">
+                
+            </ComboBox>
+            <Button HorizontalAlignment="Stretch" Content="Load file" 
+                Padding="3" Margin="5"
                 Command="{Binding OpenFileCommand}"/>
+        </StackPanel>
     </Grid>
 </Window>
