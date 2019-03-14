@@ -22,7 +22,7 @@ namespace CG.Proj1
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new MainWindowViewModel();
+            this.DataContext = new BlackWhiteMainViewModel();
         }
     }
 }
