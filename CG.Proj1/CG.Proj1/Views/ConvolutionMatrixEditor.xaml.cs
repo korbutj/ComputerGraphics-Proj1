@@ -103,8 +103,6 @@ namespace CG.Proj1.Views
                     }
                     n++;
                 }
-                
-                
             }
         }
     }
