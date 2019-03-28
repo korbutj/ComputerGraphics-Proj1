@@ -24,5 +24,10 @@ namespace CG.Proj1
             InitializeComponent();
             this.DataContext = new BlackWhiteMainViewModel();
         }
+
+        private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
+        }
     }
 }

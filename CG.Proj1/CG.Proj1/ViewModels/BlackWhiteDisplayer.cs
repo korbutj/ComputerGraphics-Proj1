@@ -42,6 +42,14 @@ namespace CG.Proj1.ViewModels
             }
         }
 
+        private int octreeLevel;
+
+        public int OctreeLevel
+        {
+            get { return octreeLevel; }
+            set { SetProperty(ref octreeLevel, value); }
+        }
+
         private static unsafe void PixelToGrayscale(int x, int y, WriteableBitmap copy, byte* copyPtr)
         {
             var bytesPerPixel = copy.Format.BitsPerPixel / 8;
@@ -83,14 +91,35 @@ namespace CG.Proj1.ViewModels
 
         public ICommand ThresholdCommand { get; }
         public ICommand OcTreeCommand { get; }
+        public ICommand GrayscaleCommand { get; }
 
         public BlackWhiteDisplayer()
         {
             ThresholdCommand = new DelegateCommand(() => Thresholding(126), () => Image != null)
                 .ObservesProperty(() => Image);
-            OcTreeCommand = new DelegateCommand(() => Octree(2), () => Image != null)
+            OcTreeCommand = new DelegateCommand(() => Octree(OctreeLevel), () => Image != null)
+                .ObservesProperty(() => Image);
+            GrayscaleCommand = new DelegateCommand(() => ToGrayscale(), () => Image != null)
                 .ObservesProperty(() => Image);
             GrayColors = 2;
+            OctreeLevel = 1;
+        }
+
+        private void ToGrayscale()
+        {
+            var copy = new WriteableBitmap(Image);
+            unsafe
+            {
+                var copyPtr = (byte*) copy.BackBuffer;
+                for (int y = 0; y < copy.PixelHeight; y++)
+                {
+                    for (int x = 0; x < copy.PixelWidth; x++)
+                    {
+                        PixelToGrayscale(x, y, Image, copyPtr);
+                    }
+                }
+                ConvertedImageSource = copy;
+            }
         }
 
         private void Octree(int level)
@@ -146,26 +175,23 @@ namespace CG.Proj1.ViewModels
                         PixelToGrayscale(x, y, Image, copyPtr);
                     }
                 }
-                copy.Unlock();
+
                 var borders = new byte[GrayColors];
                 for (int i = 0; i < GrayColors; i++)
                 {
                     borders[i] = (byte) ((255 * i) / (GrayColors - 1));
                 }
 
-                ConvertedImageSource.Lock();
                 var truPtr = (byte*) Image.BackBuffer;
                 for (int y = 0; y < Image.PixelHeight; y++)
                 {
                     for (int x = 0; x < Image.PixelWidth; x++)
                     {
-                        Threshold(x, y, copyPtr, truPtr, borders, 127);
+                        Threshold(x, y, copyPtr, copyPtr, borders, 127);
                     }
                 }
 
-                ConvertedImageSource.Unlock();
                 ConvertedImageSource = copy;
-                ConvertedImageSource.Unlock();
             }
         }
 

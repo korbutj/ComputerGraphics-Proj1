@@ -17,6 +17,7 @@ namespace CG.Proj1.ViewModels
         }
 
         public List<int> GrayScales => new List<int>() { 2, 4, 16 };
+        public List<int> OctreeLevels => new List<int>() { 1,2,3,4,5,6 };
 
         public ICommand OpenFileCommand { get; set; }
 

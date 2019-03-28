@@ -11,38 +11,47 @@
         Background="LightSteelBlue">
     <Window.Resources>
         <Style TargetType="{x:Type Button}">
-            <Setter Property="Margin" Value="3"/>
-            <Setter Property="Height" Value="25"/>
+            <Setter Property="Margin" Value="3" />
+            <Setter Property="Height" Value="25" />
         </Style>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5*"></ColumnDefinition>
-            <ColumnDefinition Width="5"></ColumnDefinition>
-            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="5*" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="60" />
         </Grid.RowDefinitions>
         <GroupBox Header="Display area" Grid.Column="0" Grid.RowSpan="2" Background="Transparent">
-            <views:ImageDisplayer DataContext="{Binding ImgDisplayer}"/>
+            <views:ImageDisplayer DataContext="{Binding ImgDisplayer}" />
         </GroupBox>
-        <GridSplitter Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Background="DeepSkyBlue" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></GridSplitter>
+        <GridSplitter Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Background="DeepSkyBlue"
+                      VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
         <ScrollViewer Grid.Row="0" Grid.Column="2">
             <StackPanel>
-                <Button Content="Thresholding" Command="{Binding ImgDisplayer.ThresholdCommand}"/>
-                <Button Content="ocTree" Command="{Binding ImgDisplayer.OcTreeCommand}"/>
+                <StackPanel>
+                    <Label>Average dithering</Label>
+                    <Button Content="Dithering" Command="{Binding ImgDisplayer.ThresholdCommand}" />
+                    <Button Content="To grayscale" Command="{Binding ImgDisplayer.GrayscaleCommand}"/>
+                    <!-- <ComboBox Margin="3" SelectedItem="{Binding ImgDisplayer.GrayColors}" -->
+                    <!--           ItemsSource="{Binding GrayScales}"/> -->
+                </StackPanel>
+                <Button Content="ocTree" Command="{Binding ImgDisplayer.OcTreeCommand}" />
+                <StackPanel>
+                    <Label>OcTree amount of levels</Label>
+                    <ComboBox SelectedItem="{Binding ImgDisplayer.OctreeLevel}"
+                              ItemsSource="{Binding OctreeLevels}">
+                    </ComboBox>
+                </StackPanel>
             </StackPanel>
         </ScrollViewer>
         <StackPanel Grid.Row="1" Grid.Column="2">
-            <ComboBox Margin="3" SelectedItem="{Binding ImgDisplayer.GrayColors}"
-                      ItemsSource="{Binding GrayScales}">
-                
-            </ComboBox>
-            <Button HorizontalAlignment="Stretch" Content="Load file" 
-                Padding="3" Margin="5"
-                Command="{Binding OpenFileCommand}"/>
+            <Button HorizontalAlignment="Stretch" Content="Load file"
+                    Padding="3" Margin="5"
+                    Command="{Binding OpenFileCommand}" />
         </StackPanel>
     </Grid>
 </Window>
