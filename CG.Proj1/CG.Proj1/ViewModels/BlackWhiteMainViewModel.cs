@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Input;
+using CG.Proj1.BaseClass;
 using Prism.Commands;
 using Prism.Mvvm;
 
@@ -29,8 +30,6 @@ namespace CG.Proj1.ViewModels
         {
             var dialog = new Microsoft.Win32.OpenFileDialog
             {
-                DefaultExt = ".png",
-                Filter = "Images |*.jpg ; *.png"
             };
             if (dialog.ShowDialog() == true)
             {

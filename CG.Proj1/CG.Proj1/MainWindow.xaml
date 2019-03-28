@@ -29,34 +29,10 @@
             <views:ImageDisplayer DataContext="{Binding ImgDisplayer}"/>
         </GroupBox>
         <GridSplitter Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Background="DeepSkyBlue" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></GridSplitter>
-        <!--<ScrollViewer Grid.Row="0" Grid.Column="2">
-            <StackPanel>
-                <GroupBox Padding="3" Header="Functions" Margin="0,0,0,10">
-                    <StackPanel Margin="3">
-                        <Button Content="Inversion" Command="{Binding ImgDisplayer.InverseCommand}" />
-                        <Button Content="Brightness+" Command="{Binding ImgDisplayer.BrightnessPlusCommand}" />
-                        <Button Content="Brightness-" Command="{Binding ImgDisplayer.BrightnessMinusCommand}"/>
-                        <Button Content="Contrast" Command="{Binding ImgDisplayer.ContrastCommand}"/>
-                    </StackPanel>
-                </GroupBox>
-                <GroupBox Padding="3" Header="Convolutions">
-                    <StackPanel Margin="3">
-                        <Button Content="Blur" Command="{Binding ImgDisplayer.BlurCommand}" />
-                        <Button Content="Gaussian smoothing" Command="{Binding ImgDisplayer.GaussSmoothingCommand}" />
-                        <Button Content="Sharpen" Command="{Binding ImgDisplayer.SharpenCommand}" />
-                        <Button Content="Emboss" Command="{Binding ImgDisplayer.EmbossCommand}"/>
-                        <Button Content="Edge X" Command="{Binding ImgDisplayer.EdgeXCommand}"/>
-                        <Button Content="Edge Y" Command="{Binding ImgDisplayer.EdgeYCommand}"/>
-                    </StackPanel>
-                </GroupBox>
-                <GroupBox Padding="3" Header="Editor">
-                    <Button Content="Create your own convolution" Command="{Binding ConvolutionEditorCommand}"/>
-                </GroupBox>
-            </StackPanel>
-        </ScrollViewer>-->
         <ScrollViewer Grid.Row="0" Grid.Column="2">
             <StackPanel>
                 <Button Content="Thresholding" Command="{Binding ImgDisplayer.ThresholdCommand}"/>
+                <Button Content="ocTree" Command="{Binding ImgDisplayer.OcTreeCommand}"/>
             </StackPanel>
         </ScrollViewer>
         <StackPanel Grid.Row="1" Grid.Column="2">
